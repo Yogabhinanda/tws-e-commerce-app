@@ -6,7 +6,7 @@ data "aws_ami" "os_image" {
     values = ["available"]
   }
   filter {
-    name = "state"
+    name = "name"
     values = ["ubuntu/images/hvm-ssd-gp3/*24.04-amd64*"]
   }
 }
