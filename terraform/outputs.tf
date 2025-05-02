@@ -29,3 +29,13 @@ output "eks_node_group_public_ips" {
   description = "Public IPs of the EKS node group instances"
   value       = data.aws_instances.eks_nodes.public_ips
 }
+
+output "s3_bucket_name" {
+  value       = aws_s3_bucket.terraform_state.id
+  description = "The name of the S3 bucket"
+}
+
+output "dynamodb_table_name" {
+  value       = aws_dynamodb_table.terraform_locks.id
+  description = "The name of the DynamoDB table"
+}

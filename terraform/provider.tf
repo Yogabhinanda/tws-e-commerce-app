@@ -1,3 +1,20 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+
+  backend "s3" {
+    bucket         = "demo-terraform-eks-state-s3-bucket-yoga"
+    key            = "terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-eks-state-locks"
+    encrypt        = true
+  }
+}
+
 locals {
 
   region          = "eu-west-1"
