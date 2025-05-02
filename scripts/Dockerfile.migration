@@ -1,5 +1,5 @@
-# Use Node.js 18 Alpine as base
-FROM node:18-alpine
+# Use Node.js 18 Alpine as base in Stage 1: Build Stage
+FROM node:18-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -17,6 +17,23 @@ COPY .db ./.db
 # Install dependencies
 RUN npm install
 RUN npm install --save-dev @types/mongoose
+
+# Stage 2: Production Stage
+FROM node:18-alpine AS runner
+
+# Create a new user
+RUN adduser -D -u 1000 appuser
+
+# Create a directory and set ownership
+RUN mkdir -p /app && chown -R appuser:appuser /app
+
+# Set the working directory
+WORKDIR /app
+
+# Switch to the user
+USER appuser
+
+COPY --from=builder /app ./
 
 # Set environment variables
 ENV NODE_ENV=development
