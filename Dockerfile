@@ -22,8 +22,17 @@ RUN npm run build
 # Stage 2: Production Stage
 FROM node:18-alpine AS runner
 
-# Set working directory
+# Create a new user
+RUN useradd -m -u 1000 appuser
+
+# Create a directory and set ownership
+RUN mkdir -p /app && chown -R appuser:appuser /app
+
+# Set the working directory
 WORKDIR /app
+
+# Switch to the user
+USER appuser
 
 # Copy necessary files from builder stage
 COPY --from=builder /app/.next/standalone ./
