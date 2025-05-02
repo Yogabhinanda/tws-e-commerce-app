@@ -23,7 +23,8 @@ RUN npm run build
 FROM node:18-alpine AS runner
 
 # Create a new user
-RUN useradd -m -u 1000 appuser
+# RUN useradd -m -u 1000 appuser
+RUN adduser -D -u 1000 appuser
 
 # Create a directory and set ownership
 RUN mkdir -p /app && chown -R appuser:appuser /app
